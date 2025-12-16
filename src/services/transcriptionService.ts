@@ -127,10 +127,10 @@ export class TranscriptionService {
   async transcribeAudio(audioBlob: Blob): Promise<string> {
     try {
       const arrayBuffer = await audioBlob.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
+      const uint8Array = new Uint8Array(arrayBuffer);
 
       const { result, error } =
-        await this.deepgram.listen.prerecorded.transcribeFile(buffer, {
+        await this.deepgram.listen.prerecorded.transcribeFile(uint8Array, {
           model: this.config.model,
           language: this.config.language,
           punctuate: this.config.punctuate,
